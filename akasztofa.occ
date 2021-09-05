@@ -1,0 +1,50 @@
+#INCLUDE "course.module"
+
+
+PROC main(CHAN BYTE keyboard, screen, error)
+  VAL []BYTE szoveg IS "prognyelvek":
+  [(SIZE szoveg)]BYTE szoveg2:
+  
+  BOOL read:
+  BYTE ch:
+  INT num:
+  INT van:
+
+  
+  SEQ
+    read := TRUE
+    num := 0
+
+   
+    WHILE read
+      SEQ
+        van := -1
+        keyboard ? ch
+        SEQ i = 0 FOR (SIZE szoveg)
+          IF
+            szoveg[i] = ch
+              SEQ
+                szoveg2[i] := ch
+                van := 1
+            TRUE
+              SKIP
+        IF
+          van = (-1)
+            num := num +1
+          TRUE
+            SKIP
+            
+        IF
+          equal.string(szoveg2,szoveg)
+            SEQ
+              out.string(szoveg, 0, screen)
+              out.string("*n", 0, screen)
+              read := FALSE
+          num > 5
+            SEQ
+              out.string("Nem nyert!*n", 0, screen)
+              read := FALSE
+          TRUE
+            SKIP
+ 
+:
